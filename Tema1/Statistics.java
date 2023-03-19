@@ -32,7 +32,7 @@ public class Statistics {
 			ArrayList<Integer> letters = new ArrayList<Integer>();
 			ArrayList<Integer> total = new ArrayList<Integer>();
 
-			/* 	parcurgem fiecare litera din alfabet */
+			/* parcurgem fiecare litera din alfabet */
 			for (char i = 'a'; i <= 'z'; i++) {
 				ArrayList<Integer> score_each_letter = new ArrayList<Integer>();
 
@@ -43,7 +43,7 @@ public class Statistics {
 							- (cuvinte[j].length() - times(i, cuvinte[j])));
 				}
 
-				/* 	avem vectorul de scoruri sortat descrescator */
+				/* avem vectorul de scoruri sortat descrescator */
 				Collections.sort(score_each_letter, Collections.reverseOrder());
 				int aux = score_each_letter.get(0), contor = 1, sum = 0;
 				while (aux > 0 && contor < score_each_letter.size()) {
@@ -52,13 +52,13 @@ public class Statistics {
 					sum++;
 				}
 
-				/* 	daca se termina vectorul si aux este inca pozitiv,
+				/* daca se termina vectorul si aux este inca pozitiv,
 					sum nu a apucat sa se incrementeze ultima data */
 				if (aux > 0) {
 					sum++;
 				}
 
-				/* 	in vectorul total o sa avem cate cuvinte
+				/* in vectorul total o sa avem cate cuvinte
 					putem concatena ca suma sa ramana pozitiva */
 				total.add(sum);
 			}
