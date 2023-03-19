@@ -30,7 +30,7 @@ public class Walsh {
 
 		private int parse_matrix(int dimensiune, int linie, int coloana, int neg_count) {
 			if (linie <= dimensiune / 2 && coloana <= dimensiune / 2) {
-				/*	coltul stanga sus */
+				/* coltul stanga sus */
 				if (dimensiune > 2) {
 					return parse_matrix(dimensiune / 2, linie, coloana, neg_count);
 				} else if (neg_count % 2 != 0) {
@@ -39,7 +39,7 @@ public class Walsh {
 					return 0;
 				}
 			} else if (linie > dimensiune / 2 && coloana <= dimensiune / 2) {
-				/*	coltul stanga jos */
+				/* coltul stanga jos */
 				if (dimensiune > 2) {
 					int line = (linie - dimensiune / 2);
 					return parse_matrix(dimensiune / 2, line, coloana, neg_count);
@@ -49,7 +49,7 @@ public class Walsh {
 					return 0;
 				}
 			} else if (linie <= dimensiune / 2 && coloana > dimensiune / 2) {
-				/*	coltul dreapta sus */
+				/* coltul dreapta sus */
 				if (dimensiune > 2) {
 					int column = (coloana - dimensiune / 2);
 					return parse_matrix(dimensiune / 2, linie, column, neg_count);
@@ -59,7 +59,7 @@ public class Walsh {
 					return 0;
 				}
 			} else {
-				/*	coltul dreapta jos */
+				/* coltul dreapta jos */
 				if (dimensiune > 2) {
 					neg_count++;
 					int line = (linie - dimensiune / 2), column = (coloana - dimensiune / 2);
