@@ -36,12 +36,12 @@ public class Prinel {
 		}
 
 		private int solve() {
-			/* 	obtinem maximul din target pentru a sti exact
+			/* obtinem maximul din target pentru a sti exact
 				pana la ce valoare calculam operatiile */
 			int max = Collections.max(target);
 			int[] all_values = new int[max + 1];
 
-			/* 	initializam valorile din vector cu numarul maxim
+			/* initializam valorile din vector cu numarul maxim
 				care poate aparea in input + 1 */
 			for (int i = 1; i <= max; i++) {
 				all_values[i] = 100001;
@@ -58,13 +58,13 @@ public class Prinel {
 				}
 			}
 
-			/*	alegem din all_values doar elementele care apar in target */
+			/* alegem din all_values doar elementele care apar in target */
 			int[] weight = new int[target.size()];
 			for (int i = 0; i < weight.length;i++) {
 				weight[i] = all_values[target.get(i)];
 			}
 
-			/*	apelam problema rucsacului */
+			/* apelam problema rucsacului */
 			int result = rucsac(k, weight, p, n);
 			return result;
 		}
