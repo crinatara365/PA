@@ -1,0 +1,70 @@
+Tararache Crina-Andreea, grupa 324CB
+
+Problema 3: Beamdrone
+Pentru implementarea acestei probleme am folosit algoritmul lui Dijkstra implementat in laboratorul 9. Acest algoritm 
+calculeaza drumul cu cost minim dintr-un nod sursa catre toate nodurile din graf. De aceea inainte de prelucarea fiecarui
+nod nou verificam daca am ajuns la nodul destinatie si ne oprim pentru a nu face mai multi pasi decat este necesar. 
+Pentru inceput, realizam citirea in metoda readInput, din clasa Task, cu BufferedReader: daca contor=0, citim prima linie
+cu numarul de linii N si numarul de coloane M; daca contor=1, citim urmatoarea linie cu coordonatele nodului sursa si
+destinatie; in sfarsit, daca contor este diferit de aceste doua valori, citim linii pana citim null si completam variabila
+graph. Acum se apeleaza metoda solve unde implementam efectiv algoritmul: cream o variabila source de tip MyNode. Aceasta
+clasa contine urmatoarele campuri: indicii x si y pt linie si coloana, directia din care am ajuns in acel nod si costul 
+minim din sursa pana in acel nod. De asemenea, folosim o coada de prioritati pentru a stoca nodurile. Aceasta coada de 
+prioritati se difera de o coada normala prin faptul ca ii putem da un comparator ca parametru in functie de care sa faca 
+introducerea nodului in coada: am creat astfel NodeComparator care aranjeaza nodurile in coada in ordine crescatoare dupa 
+campul d dintr-un nod care reprezinta costul din sursa pana in acel nod. Acest lucru eficientizeaza procesul si scade 
+timpul de executie al programului. Mai avem nevoie de o matrice d in care sa retinem costul pentru fiecare nod din sursa.
+Acum adaugam nodul sursa cu coordonatele din fisierul de intrare in coada de prioritati si incepem sa iteram prin aceasta.
+Atata timp cat coada nu este goala, in primul rand, asa cum am spus mai sus, verificam sa nu fi ajuns la final. Daca nu, 
+din nodul sursa mergem in toti vecinii acestuia (dreapta, stanga, sus si jos). Verificam daca pozitia este valida (sa nu 
+iesim din matrice) si ca nu cumva pozitia in graph sa fie 'W' (pentru a gasi drumul cel mai scurt, ne prefacem ca nodurile
+ce contin caracterul 'W' nu exista). Cream apoi un nod cu noile coordonate, cu directia din care venim si cu costul luat 
+din matricea d de costuri (daca ne ducem in dreapta, completam campul direction cu 'right' si tot asa). Daca directia 
+sursei este 'start' (tocmai ce am pornit, deci oriunde ne-am duce avem cost 0) sau daca directia din nordul sursa este 
+egala cu directia nodului curent (daca in nodul sursa am ajuns prin dreapta, sa zicem, si acum mergem tot la dreapta, avem 
+cost 0); altfel, costul este 1. In functie de asta intram ori pe if, ori pe else. De asemenea, acum verificam daca s-a 
+mai ajuns vreodata in acest nod: daca campul d este egal cu 100000 (cat am dat initial in matricea d) inseamna ca nu am 
+mai trecut pe acolo deci oricare ar fi costul pana in sursa adunat la costul de 1 sau 0 deja explicat, clar este mai mic 
+decat cel initial, deci il atribuim. Altfel, verificam daca costul drumului pana in nodul sursa + costul din sursa pana in 
+nodul curent este mai mic decat ce gasim in campul d al nodului curent. Daca da, il atribui. Nu uitam la final sa adaugam 
+nodul curent in coada de prioritati. Acest algoritm se repeta pana cand intalnim nodul destinatie si returnam campul d care
+reprezinta exact drumul cu cost minim din sursa in destinatie. Printam la final rezultatul in fisier cu PrintWriter.
+Complexitate: Complexitatea algoritmului lui Dijkstra este O(m * log n).
+
+Problema 4: Curse
+Citirea si printarea sunt similare ca la problema anterioara. La aceasta problema trebuie sa stabilim legaturile dintre noduri 
+in functie de fisierul de intrare (muchiile, basically) si apoi sa sortam topologic acest graf pentru a obtine ordinea buna
+a nodurilor in functie de aceste legaturi. Astfel, cream o lista de adiacenta adj de tipul ArrayList<ArrayList<Integer>> de
+dimensiune M (cate noduri avem) si pentru fiecare element initializam lista. Fun fact: cel mai mult la aceasta problema am stat 
+sa-mi dau seama de ce toate listele din lista de adiacenta 'pointau' catre acceasi zona de memorie si asta se intampla pentru 
+ca aveam 'ArrayList<Integer> aux = new ArrayList<Integer>()' in afara for-ului de initializare si practic orice adaugam in 
+orice lista se adauga in toate. Urmatorul pas este sa stabilim legaturile dintre noduri: parcurgem matricea matrix 2 linii
+cate 2 si luam un indice j pentru pozitia pe linie. Crestam j-ul pana cand gasim doua valori distincte in matrix[i][j] si
+matrix[i+1][j]. Daca nodul din matrix[i+1][j] nu este deja in lista de adiacenta a nodului din matrix[i][j] il adaugam. 
+Indiferent daca adaugam sau nu, facem break pentru a trecem la urmatoarele doua linii. Acum avem in adj lista completa de 
+adiacenta deci tot ce ne ramane de facut este sa sortam topologic. Pentru aceasta am folosit functiile dfs si solve_dfs din 
+laboratorul 7. Cream o lista topsort care va contine nodurile in ordinea corecta si un vector used pentru a sti daca am trecut
+sau nu deja prin nodul curent. Pentru fiecare nod care nu a fost vizitat apelam functia dfs care ia toti vecinii nodului din 
+lista de adiacenta si apeleaza recursiv functia dfs, adaugandu-i in lista finala topsort. La sfarsit, obtinem ordinea inversa
+deci facem Collections.reverse(topsort) si returnam topsort. 
+Complexitate: Complexitatea sortarii topologice folosind DFS este O(n + m).
+Mentiune: Daca foloseam structura ArrayList<Integer> adj[] = new ArrayList[NMAX] preluata din solutia laboratorului 7 primeam 2
+note-uri ciudate atunci cand faceam build:
+Note: Curse.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Iar daca rulam cu javac -Xlint Curse.java primeam asta:
+                        ArrayList<Integer> adj2[] = new ArrayList[M];
+                                                        ^
+  missing type arguments for generic class ArrayList<E>
+  where E is a type-variable:
+    E extends Object declared in class ArrayList
+Curse.java:59: warning: [unchecked] unchecked conversion
+                        ArrayList<Integer> adj2[] = new ArrayList[M];
+                                                    ^
+  required: ArrayList<Integer>[]
+  found:    ArrayList[]
+2 warnings
+ Din acest motiv, n-am stiut daca este ok si am ales sa folosesc ArrayList<ArrayList<Integer>> adj in loc de ArrayList<Integer> adj[].
+
+
+     
