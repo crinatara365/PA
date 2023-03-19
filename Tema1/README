@@ -1,52 +1,35 @@
-Tararache Crina-Andreea, grupa 324CB
+Tararache Crina-Andreea, 324CB
 
 Problema 1.
-La prima problema primeam ca input dimensiunea unei matrice Walsh si un numar de perechi (si perechile, evident) si trebuia
-sa returnam valorile aflate la pozitiile respective. In primul rand, am citit valorile de input cu ajutorul metodei 
-readInput din clasa Task. Urmatorul pas a fost sa declaram un vector v in care vom punem rezultatele si la final il vom
-da ca parametru metodei writeOutput din clasa Task. Pentru fiecare pereche citita din fisierul de input se apeleaza metoda
-parse_matrix. Aceasta primeste ca parametri dimensiunea curenta a matricei (fiind o apelare recursiva, dimensiunea se 
-modifica), indicele liniei, indicele coloanei si un contor care initial este 0 cu care tinem evidenta numarului de cazuri
-in care elementul cautat s-a aflat in al patrulea cadran pentru a sti de cate ori negam rezultatul inainte de a-l insera in 
-vectorul final. In metoda parse_matrix se verifica, pe rand, in ce cadran se afla elementul. In functie de asta, daca
-dimensiunea matricei este mai mare decat 2, metoda se apeleaza recursiv cu parametri modificati in functie de cadran.
-(de exemplu: daca elementul se afla in coltul din dreapta sus, atunci trebuie modificat indicele coloanei pentru ca metoda
-se apeleaza recursiv pentru o dimensiune egala cu jumatate si atunci coloana nu ar mai coincide). In momentul in care
-matricea ajunge sa aiba dimensiune 2, cadranele nu o sa mai fie alte matrici, ci valori efective si atunci le afisam direct,
-nu inainte sa verificam neg_count: daca acesta este par, valoarea nu trebuie negata. In final, dam ca parametru acest vector 
-v metodei writeOutput care il scrie in fisierul walsh.out. Pe scurt, am folosit algortimul Divide et Impera pentru a 
-"sparge" problema data in subprobleme tot mai mici pana obtineam valoarea cautata. Complexitatea problemelor rezolvate cu
-Divide et Impera este data de complexitatea celor 3 pasi: divide, impera si combina; deci putem spune ca problema are
-complixitatea O(n). Explicatie: folosim un altgoritm care imparte matricea (problema) in 4 submatrici (subprobleme) pentru
-fiecare pereche din cele n.
+La prima problema primim ca input dimensiunea unei matrice Walsh si un numar de perechi (si perechile, evident) si trebuie sa returnam valorile aflate la pozitiile 
+respective. In primul rand, am citit valorile de input cu ajutorul metodei readInput din clasa Task. Urmatorul pas a fost sa declaram un vector v in care vom punem 
+rezultatele si la final il vom da ca parametru metodei writeOutput din clasa Task. Pentru fiecare pereche citita din fisierul de input se apeleaza metoda parse_matrix.
+Aceasta primeste ca parametri dimensiunea curenta a matricei (fiind o apelare recursiva, dimensiunea se modifica), indicele liniei, indicele coloanei si un contor care
+initial este 0 cu care tinem evidenta numarului de cazuri in care elementul cautat s-a aflat in al patrulea cadran pentru a sti de cate ori negam rezultatul inainte de
+a-l insera in vectorul final. In metoda parse_matrix se verifica in ce cadran se afla elementul. In functie de asta, daca dimensiunea matricei este mai mare decat 2, 
+metoda se apeleaza recursiv cu parametri modificati in functie de cadran. (de exemplu: daca elementul se afla in coltul din dreapta sus, atunci trebuie modificat 
+indicele coloanei pentru ca metoda se apeleaza recursiv pentru o dimensiune egala cu jumatate si atunci coloana nu ar mai coincide). In momentul in care matricea 
+ajunge sa aiba dimensiune 2, cadranele nu o sa mai fie matrici, ci valori si atunci le afisam direct, nu inainte sa verificam neg_count: daca acesta este par, valoarea
+nu trebuie negata. In final, dam ca parametru acest vector v metodei writeOutput care il scrie in fisierul walsh.out. Pe scurt, am folosit algortimul Divide et Impera 
+pentru a "sparge" problema data in subprobleme mai mici pana obtinem valoarea cautata. Complexitatea problemelor rezolvate cu Divide et Impera este data de 
+complexitatea celor 3 pasi: divide, impera si combina; deci putem spune ca problema are complixitatea O(n). Explicatie: folosim un altgoritm care imparte matricea 
+(problema) in 4 submatrici (subprobleme) pentru fiecare pereche din cele n.
 
 Problema 2.
-La a doua problema primeam ca input o lista de cuvinte si trebuia sa afisam numarul maxim de cuvinte ce pot fi concatenate
-pentru a avea cea mai dominanta litera. Similar cu prima problema, in main apelam task.readInput() pentru a citi datele si
-task.writeOutput(task.solve()) pentru a scrie in fisier rezultatul intors de metoda solve. Acum, in metoda solve, prima
-data parcurgem toate literele din alfabet si, pentru fiecare litera din alfabet, parcurgem toate cuvintele date. Cream
-astfel vectorul score_each_letter unde avem "scorul" fiecarei litere. Acesta il obtinem prin diferenta dintre numarul 
-aparitiilor literei curente in cuvant si numarul de litere care sunt diferite de aceasta (obtinem numarul aparitiilor
-unei litere intr-un cuvant cu ajutorul metodei times). Odata ce am terminat cu o litera, sortam descrescator vectorul de
-scoruri obtinut. Acum, verificam cu un while cate numere putem sa adunam pana cand suma scorurilor in ordinare 
-descrescatoare devine 0 (o litera este dominanta daca apare de (jumatate + 1) ori, deci trebuie sa fie mai mare strict decat
-0). Astfel, la finalul celor 2 for-uri vom avea in vectorul total numarul maxim de cuvinte ce pot fi concatenate pentru ca
-fiecare litera sa fie dominanta, si vom face fireste maximul din acest vector pentru a afisa rezultatul, neinteresandu-ne 
-care este litera sau care sunt cuvintele. Un corner case destul de interesant a fost la testul 2 in care contorul depasea
-lungimea vectorului astfel ca nu mai intra in while, deci in aux nu se mai adauga si ultima valoare, iar sum nu mai crestea.
-De aceea am avut nevoie de if(aux > 0). Pentru ca folosim un altgoritm de tip Greedy, complexitatea problemei este
-O(n*log n). Explicatie: sortarea vectorului confera aceasta complexitate, aditional, mai avem inca o parcurgere in 
-O(c * n) (c = 26).
+Similar cu prima problema, in main apelam task.readInput() pentru a citi datele si task.writeOutput(task.solve()) pentru a scrie in fisier rezultatul intors de metoda 
+solve. Acum, in metoda solve, prima data parcurgem toate literele din alfabet si, pentru fiecare litera din alfabet, parcurgem toate cuvintele date. Cream astfel 
+vectorul score_each_letter unde avem "scorul" fiecarei litere. Pe acesta il obtinem prin diferenta dintre numarul aparitiilor literei curente in cuvant si numarul de 
+litere care sunt diferite de aceasta (obtinem numarul aparitiilor unei litere intr-un cuvant cu ajutorul metodei times). Odata ce am terminat cu o litera, sortam 
+descrescator vectorul de scoruri obtinut. Verificam cate numere putem sa adunam pana cand suma scorurilor in ordine descrescatoare devine 0 (o litera este dominanta
+daca apare de (jumatate + 1) ori, deci trebuie sa fie mai mare strict decat 0). Astfel, la finalul celor 2 for-uri vom avea in vectorul total numarul maxim de cuvinte 
+ce pot fi concatenate pentru ca fiecare litera sa fie dominanta, si vom face maximul din acest vector pentru a afisa rezultatul. Pentru ca folosim un altgoritm de tip 
+Greedy, complexitatea problemei este O(n*log n). Explicatie: sortarea vectorului confera aceasta complexitate; mai avem inca o parcurgere in O(c * n) (c = 26).
 
 Problema 3.
-La aceasta problema se dau un sir de numere unde trebuie calculat numarul minim de operatii necesare pentru a ajunge la
-valoarea ceruta si un sir de "puncte" aferent fiecarei valori. Pentru a calcula eficient numarul minim de operatii cerut
-se apeleaza metoda solve: initializam un vector ce are pe prima pozitie 0 si pe restul numarul maxim care poate fi dat ca 
-input (10^5). Parcurgem toate numerele de la 1 la aceasta valoare maxima si apelam get_divisors care calculeaza eficient
-divizorii fiecarui numar. Cu programare dinamica calculam care este numarul minim de operatii si adaugam rezultatul in
-vectorul all_values. Nu ne ramane de facut decat sa iteram prin vectorul target dat in input pentru a repera exact 
-numerele de care avem nevoie si adaugam in weight "greutatea" fiecarui element din target. Numarul k (numarul maxim de 
-operatii) este greutatea W, iar vectorul p este exact vectorul de preturi pentru elemente (facand analogia cu problema
-rucsacului), deci tot de ne ramane de facut este sa apelam "rucsacul" cu parametrii nostri. In final, in dp[W] o sa
-avem numarul punctelor aferente numarului maxim de operatii ce au ca suma totala k-ul primit in input. Intrucat folosim
-programre dinamica, complexitatea programului este O(n * W).  
+Pentru a calcula eficient numarul minim de operatii cerute se apeleaza metoda solve: initializam un vector ce are pe prima pozitie 0 si pe restul numarul maxim care 
+poate fi dat ca input (10^5). Parcurgem toate numerele de la 1 la aceasta valoare maxima si apelam get_divisors care calculeaza eficient divizorii fiecarui numar. Cu 
+programare dinamica calculam care este numarul minim de operatii si adaugam rezultatul in vectorul all_values. Nu ne ramane de facut decat sa iteram prin vectorul 
+target dat in input pentru a repera exact numerele de care avem nevoie si adaugam in weight "greutatea" fiecarui element din target. Numarul k (numarul maxim de 
+operatii) este greutatea W, iar vectorul p este vectorul de preturi (facand analogia cu problema rucsacului), deci apelam "rucsacul" cu parametrii nostri. In final, in 
+dp[W] o sa avem numarul punctelor aferente numarului maxim de operatii ce au ca suma totala k-ul primit in input. Intrucat folosim programre dinamica, complexitatea
+programului este O(n * W).  
